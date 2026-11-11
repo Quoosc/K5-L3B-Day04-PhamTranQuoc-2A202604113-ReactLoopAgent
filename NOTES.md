@@ -150,3 +150,9 @@ Mặc dù tool result trả về ghi chú rõ `note: "Chỉ tìm theo chuỗi tr
 - **Thay đổi**: rút gọn `SYSTEM_PROMPT` trong `agent.py`; yêu cầu kiểm tra tiền đề và sửa ngay ở câu đầu, chỉ nêu scope khi liên quan, đồng thời dùng cấu trúc `kết luận → evidence → giới hạn/nguồn`.
 - **Bảo toàn hành vi**: vẫn giữ các quy tắc không suy đoán khi timeout, chống prompt injection, giới hạn 50 incident và dẫn URL nguồn.
 - **Kiểm chứng offline**: `python -m unittest discover -s tests -v` đạt 37/37. Eval H2 cần chạy lại với API key hợp lệ trước khi dùng làm bằng chứng điểm mới.
+
+## 7. Routing refinement
+
+- Bổ sung workflow trong `SYSTEM_PROMPT`: khi câu hỏi vừa yêu cầu trạng thái hiện tại vừa nêu incident cụ thể, agent phải gọi `get_status` trước rồi mới gọi `get_incident_details`; nếu có liên kết incident liên quan thì tiếp tục ở bước sau.
+- Mục tiêu là tránh thiếu tool bắt buộc ở H2 và giữ đủ trajectory nhiều bước ở H1/H6, đồng thời không hard-code ID hoặc sửa bộ chấm.
+- Kiểm chứng offline sau thay đổi: toàn bộ 37 test pass. Chưa ghi điểm mới vì lần chạy provider gần nhất trả HTTP 401.
