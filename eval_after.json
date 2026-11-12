@@ -4,7 +4,7 @@
     "scored_cases": 22,
     "unscored_cases": 0,
     "score_0_100": 81.23,
-    "partial_mean_0_100": null
+    "partial_mean_0_100": 80.0
   },
   "config": {
     "provider": "openai",
